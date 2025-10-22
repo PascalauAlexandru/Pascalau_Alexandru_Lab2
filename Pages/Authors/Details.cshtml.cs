@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Pascalau_Alexandru_Lab2.Data;
 using Pascalau_Alexandru_Lab2.Models;
 
-namespace Pascalau_Alexandru_Lab2.Pages.Books
+namespace Pascalau_Alexandru_Lab2.Pages.Authors
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace Pascalau_Alexandru_Lab2.Pages.Books
             _context = context;
         }
 
-        public Models.Book Book { get; set; } = default!;
+        public Author Authors { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,14 +28,14 @@ namespace Pascalau_Alexandru_Lab2.Pages.Books
                 return NotFound();
             }
 
-            var book = await _context.Book.FirstOrDefaultAsync(m => m.ID == id);
-            if (book == null)
+            var authors = await _context.Authors.FirstOrDefaultAsync(m => m.Id == id);
+            if (authors == null)
             {
                 return NotFound();
             }
             else
             {
-                Book = book;
+                Authors = authors;
             }
             return Page();
         }

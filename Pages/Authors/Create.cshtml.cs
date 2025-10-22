@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Pascalau_Alexandru_Lab2.Data;
 using Pascalau_Alexandru_Lab2.Models;
 
-namespace Pascalau_Alexandru_Lab2.Pages.Books
+namespace Pascalau_Alexandru_Lab2.Pages.Authors
 {
     public class CreateModel : PageModel
     {
@@ -21,14 +21,13 @@ namespace Pascalau_Alexandru_Lab2.Pages.Books
 
         public IActionResult OnGet()
         {
-            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID","PublisherName");
             return Page();
         }
-            
-        [BindProperty]
-        public Models.Book Book { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
+        [BindProperty]
+        public Models.Author Authors { get; set; } = default!;
+
+        
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -36,7 +35,7 @@ namespace Pascalau_Alexandru_Lab2.Pages.Books
                 return Page();
             }
 
-            _context.Book.Add(Book);
+            _context.Authors.Add(Authors);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
