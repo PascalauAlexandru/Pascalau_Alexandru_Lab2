@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/"
 @model Pascalau_Alexandru_Lab2.Pages.Books.IndexModel
 
 @{
@@ -6,6 +6,16 @@
 }
 
 <h1>Index</h1>
+
+<form method="get" class="form-inline mb-3">
+    <div class="form-group">
+        <label class="me-2">Filter by author</label>
+        <select name="authorId" class="form-control me-2" asp-items="ViewBag.AuthorID">
+            <option value="">All authors</option>
+        </select>
+        <input type="submit" value="Filter" class="btn btn-primary" />
+    </div>
+</form>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -17,7 +27,7 @@
                 @Html.DisplayNameFor(model => model.Book[0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Book[0].Author) 
+                Author
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Book[0].Price)
@@ -38,7 +48,7 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Author)
+                @(item.Author != null ? item.Author.FirstName + " " + item.Author.LastName : "")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
