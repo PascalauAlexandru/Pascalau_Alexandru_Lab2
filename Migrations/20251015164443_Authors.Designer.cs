@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pascalau_Alexandru_Lab2.Data;
 
@@ -11,9 +12,11 @@ using Pascalau_Alexandru_Lab2.Data;
 namespace Pascalau_Alexandru_Lab2.Migrations
 {
     [DbContext(typeof(Pascalau_Alexandru_Lab2Context))]
-    partial class Pascalau_Alexandru_Lab2ContextModelSnapshot : ModelSnapshot
+    [Migration("20251015164443_Authors")]
+    partial class Authors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace Pascalau_Alexandru_Lab2.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Pascalau_Alexandru_Lab2.Models.Author", b =>
+            modelBuilder.Entity("Pascalau_Alexandru_Lab2.Models.Authors", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,7 +46,7 @@ namespace Pascalau_Alexandru_Lab2.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("Pascalau_Alexandru_Lab2.Models.Book", b =>
+            modelBuilder.Entity("Pascalau_Alexandru_Lab2.Models.Books", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -51,7 +54,7 @@ namespace Pascalau_Alexandru_Lab2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int?>("AuthorID")
+                    b.Property<int?>("AuthorId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -69,7 +72,7 @@ namespace Pascalau_Alexandru_Lab2.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AuthorID");
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("PublisherID");
 
@@ -93,11 +96,11 @@ namespace Pascalau_Alexandru_Lab2.Migrations
                     b.ToTable("Publisher");
                 });
 
-            modelBuilder.Entity("Pascalau_Alexandru_Lab2.Models.Book", b =>
+            modelBuilder.Entity("Pascalau_Alexandru_Lab2.Models.Books", b =>
                 {
-                    b.HasOne("Pascalau_Alexandru_Lab2.Models.Author", "Author")
+                    b.HasOne("Pascalau_Alexandru_Lab2.Models.Authors", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorID");
+                        .HasForeignKey("AuthorId");
 
                     b.HasOne("Pascalau_Alexandru_Lab2.Models.Publisher", "Publisher")
                         .WithMany("Books")

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Pascalau_Alexandru_Lab2.Data;
 using Pascalau_Alexandru_Lab2.Models;
 
-namespace Pascalau_Alexandru_Lab2.Pages.Books
+namespace Pascalau_Alexandru_Lab2.Pages.Authors
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace Pascalau_Alexandru_Lab2.Pages.Books
         }
 
         [BindProperty]
-        public Models.Book Book { get; set; } = default!;
+        public Author Authors { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,15 +29,15 @@ namespace Pascalau_Alexandru_Lab2.Pages.Books
                 return NotFound();
             }
 
-            var book = await _context.Book.FirstOrDefaultAsync(m => m.ID == id);
+            var authors = await _context.Authors.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (book == null)
+            if (authors == null)
             {
                 return NotFound();
             }
             else
             {
-                Book = book;
+                Authors = authors;
             }
             return Page();
         }
@@ -49,11 +49,11 @@ namespace Pascalau_Alexandru_Lab2.Pages.Books
                 return NotFound();
             }
 
-            var book = await _context.Book.FindAsync(id);
-            if (book != null)
+            var authors = await _context.Authors.FindAsync(id);
+            if (authors != null)
             {
-                Book = book;
-                _context.Book.Remove(Book);
+                Authors = authors;
+                _context.Authors.Remove(Authors);
                 await _context.SaveChangesAsync();
             }
 

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Pascalau_Alexandru_Lab2.Data;
 using Pascalau_Alexandru_Lab2.Models;
 
-namespace Pascalau_Alexandru_Lab2.Pages.Books
+namespace Pascalau_Alexandru_Lab2.Pages.Authors
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace Pascalau_Alexandru_Lab2.Pages.Books
         }
 
         [BindProperty]
-        public Models.Book Book { get; set; } = default!;
+        public Models.Author Authors { get; set; } = default!;  
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,18 +30,15 @@ namespace Pascalau_Alexandru_Lab2.Pages.Books
                 return NotFound();
             }
 
-            var book =  await _context.Book.FirstOrDefaultAsync(m => m.ID == id);
-            if (book == null)
+            var authors =  await _context.Authors.FirstOrDefaultAsync(m => m.Id == id);
+            if (authors == null)
             {
                 return NotFound();
             }
-            Book = book;
-            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID","PublisherName");
+            Authors = authors;
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -49,7 +46,7 @@ namespace Pascalau_Alexandru_Lab2.Pages.Books
                 return Page();
             }
 
-            _context.Attach(Book).State = EntityState.Modified;
+            _context.Attach(Authors).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +54,7 @@ namespace Pascalau_Alexandru_Lab2.Pages.Books
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BookExists(Book.ID))
+                if (!AuthorsExists(Authors.Id))
                 {
                     return NotFound();
                 }
@@ -70,9 +67,9 @@ namespace Pascalau_Alexandru_Lab2.Pages.Books
             return RedirectToPage("./Index");
         }
 
-        private bool BookExists(int id)
+        private bool AuthorsExists(int id)
         {
-            return _context.Book.Any(e => e.ID == id);
+            return _context.Authors.Any(e => e.Id == id);
         }
     }
 }
