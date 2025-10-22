@@ -9,7 +9,7 @@ namespace Pascalau_Alexandru_Lab2.Models
     public class BookCategoriesPageModel : PageModel
     {
         public List<AssignedCategoryData> AssignedCategoryDataList;
-        public void PopulateAssignedCategoryData(Pascalau_Alexandru_Lab2 context,
+        public void PopulateAssignedCategoryData(Pascalau_Alexandru_Lab2Context context,
         Book book)
         {
             var allCategories = context.Category;
@@ -26,7 +26,7 @@ namespace Pascalau_Alexandru_Lab2.Models
                 });
             }
         }
-        public void UpdateBookCategories(Pascalau_Alexandru_Lab2 context,
+        public void UpdateBookCategories(Pascalau_Alexandru_Lab2Context context,
         string[] selectedCategories, Book bookToUpdate)
         {
             if (selectedCategories == null)
