@@ -39,6 +39,8 @@ namespace Pascalau_Alexandru_Lab2.Pages.Books
 
             PopulateAssignedCategoryData(_context, Book);
 
+
+
             var book =  await _context.Book.FirstOrDefaultAsync(m => m.ID == id);
             if (book == null)
             {
