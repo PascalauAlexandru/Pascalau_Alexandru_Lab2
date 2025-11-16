@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Pascalau_Alexandru_Lab2.Models;
@@ -55,8 +56,7 @@ namespace Pascalau_Alexandru_Lab2.Areas.Identity.Pages.Account
 
         }
 
-        [BindProperty]
-        public Member Member { get; set; }
+     
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -128,15 +128,26 @@ namespace Pascalau_Alexandru_Lab2.Areas.Identity.Pages.Account
 
             await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, Input.Email ,CancellationToken.None);
+
             var result = await _userManager.CreateAsync(user, Input.Password);
 
-            Member.Email = Input.Email;
-            _context.Member.Add(Member);
-            await _context.SaveChangesAsync();
 
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password");
+
+                Member newMember = new Member {
+
+                    Email = Input.Email,
+                    FirstName = "Utilizator",
+                    LastName = "Nou"
+                };
+
+                _context.Member.Add(newMember);
+                await _context.SaveChangesAsync();
+
+
+                var role = await _userManager.AddToRoleAsync(user, "User");
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GetUserIdAsync(user);
                 code =
@@ -179,7 +190,7 @@ namespace Pascalau_Alexandru_Lab2.Areas.Identity.Pages.Account
             {
                 throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
                     $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
